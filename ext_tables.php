@@ -29,5 +29,5 @@
 
 defined ('TYPO3_MODE') or die ('Access denied.');
 
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin('AawTeam.Wufoo', 'Form', '(LLL) Wufoo Form');
+// Register plugin
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin('AawTeam.Wufoo', 'Form', 'LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:plugin.title');

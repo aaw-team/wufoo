@@ -27,14 +27,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
-// Register the plugin
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin([
-    'LLL Wufoo Forms',
-    'wufoo_form',
-//     'icon...'
-], 'list_type', 'wufoo');
-
-// Add flexform
+// Add flexform for the plugin
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('wufoo_form', 'FILE:EXT:wufoo/Configuration/Flexform/PluginWufoo.xml');
 // show tt_content.pi_flexform when the plugin is shown
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['wufoo_form'] = 'pi_flexform';
