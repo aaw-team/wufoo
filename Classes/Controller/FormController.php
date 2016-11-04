@@ -1,6 +1,5 @@
 <?php
 namespace AawTeam\Wufoo\Controller;
-
 /**
  *  Copyright notice
  *
