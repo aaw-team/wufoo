@@ -29,34 +29,44 @@ namespace AawTeam\Wufoo\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
+use AawTeam\Wufoo\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
+/**
+ * Form Controller
+ *
+ * @author Agentur am Wasser | Maeder & Partner AG (development@agenturamwasser.ch)
+ * @package AawTeam\Wufoo\Controller
+ */
 class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+    /**
+     * @return void|string
+     */
     public function indexAction()
     {
         $formUrlParsed = parse_url($this->settings['formUrl']);
         if (!$formUrlParsed) {
-            return 'Error: invalid form URL';
+            return LocalizationUtility::translate('error.invalidFormUrl');
         }
 
         // Find username
         $matches = [];
         if (!preg_match('/^([^\\.]+)\\.wufoo\\.com$/i', $formUrlParsed['host'], $matches)) {
-            return 'Error: cannot extract username';
+            return LocalizationUtility::translate('error.noUsername');
         }
         $username = $matches[1];
 
         // Find formhash
         $matches = [];
         if (!preg_match('~^/forms/([^/]+)/?$~i', $formUrlParsed['path'], $matches)) {
-            return 'Error: cannot extract formhash';
+            return LocalizationUtility::translate('error.noFormhash');
         }
         $formhash = $matches[1];
 
         // Set height
-        $height = MathUtility::canBeInterpretedAsInteger($this->settings['height']) && $this->settings['height']
+        $height = MathUtility::canBeInterpretedAsInteger($this->settings['height']) && $this->settings['height'] > 0
                   ? $this->settings['height']
                   : 500;
 

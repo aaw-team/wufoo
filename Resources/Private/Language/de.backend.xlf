@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2016-11-04T21:09:39Z" product-name="wufoo">
+        <header/>
+        <body>
+            <trans-unit id="plugin.title">
+                <source>Wufoo Form</source>
+                <target>Wufoo Formular</target>
+            </trans-unit>
+            <trans-unit id="plugin.description">
+                <source>Adds a form from a share-link of a form created on wufoo.com</source>
+                <target>Fügt ein Formular hinzu mittels Teilen-Link von wufoo.com</target>
+            </trans-unit>
+            <trans-unit id="flexform.sheet.general">
+                <source>General</source>
+                <target>Allgemein</target>
+            </trans-unit>
+            <trans-unit id="flexform.sheet.advanced">
+                <source>Advanced</source>
+                <target>Erweitert</target>
+            </trans-unit>
+            <trans-unit id="flexform.field.formUrl">
+                <source>Form URL</source>
+                <target>Formular URL</target>
+            </trans-unit>
+            <trans-unit id="flexform.field.showHeader">
+                <source>Show header</source>
+                <target>Titel anzeigen</target>
+            </trans-unit>
+            <trans-unit id="flexform.field.autoresize">
+                <source>Auto-resize the form</source>
+                <target>Automatisch Formulargrösse</target>
+            </trans-unit>
+            <trans-unit id="flexform.field.height">
+                <source>Height</source>
+                <target>Höhe</target>
+            </trans-unit>
+            <trans-unit id="flexform.label.enable">
+                <source>Enable</source>
+                <target>Aktivieren</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

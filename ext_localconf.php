@@ -46,23 +46,18 @@ mod.wizards.newContentElement.wizardItems.plugins {
     elements {
         wufoo_form {
             icon = gfx/c_wiz/mailform.gif
-            title = LLL Wufoo
-            descrition = LLL Wufoo decsription
 //            ' . $iconLine . '
-//            title = LLL:EXT:feedreader/Resources/Private/Language/locallang_db.xml:feedreader_title
-//            description = LLL:EXT:feedreader/Resources/Private/Language/locallang_db.xml:feedreader_plus_wiz_description
+            title = LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:plugin.title
+            description = LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:plugin.description
             tt_content_defValues {
                 CType = list
                 list_type = wufoo_form
             }
         }
     }
-
-//    show := addToList(wufoo_form)
 }');
 
+// Configure plugin
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('AawTeam.Wufoo', 'Form', [
-    'Form' => 'index'
-],[
     'Form' => 'index'
 ]);

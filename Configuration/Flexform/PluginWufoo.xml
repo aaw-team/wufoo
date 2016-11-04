@@ -7,14 +7,14 @@
         <sDEF>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL General</sheetTitle>
+                    <sheetTitle>LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:flexform.sheet.general</sheetTitle>
                 </TCEforms>
                 <type>array</type>
                 <el>
                     <settings.formUrl>
                         <TCEforms>
                             <exclude>0</exclude>
-                            <label>LLL Form URL</label>
+                            <label>LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:flexform.field.formUrl</label>
                             <config>
                                 <type>input</type>
                                 <eval>required,trim</eval>
@@ -27,34 +27,46 @@
         <sADVANCED>
             <ROOT>
                 <TCEforms>
-                    <sheetTitle>LLL Advanced</sheetTitle>
+                    <sheetTitle>LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:flexform.sheet.advanced</sheetTitle>
                 </TCEforms>
                 <type>array</type>
                 <el>
                     <settings.showHeader>
                         <TCEforms>
                             <exclude>1</exclude>
-                            <label>LLL Show header</label>
+                            <label>LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:flexform.field.showHeader</label>
                             <config>
                                 <type>check</type>
                                 <default>1</default>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:flexform.label.enable</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                </items>
                             </config>
                         </TCEforms>
                     </settings.showHeader>
                     <settings.autoresize>
                         <TCEforms>
                             <exclude>1</exclude>
-                            <label>LLL Auto resize</label>
+                            <label>LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:flexform.field.autoresize</label>
                             <config>
                                 <type>check</type>
                                 <default>1</default>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:flexform.label.enable</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                </items>
                             </config>
                         </TCEforms>
                     </settings.autoresize>
                     <settings.height>
                         <TCEforms>
                             <exclude>1</exclude>
-                            <label>LLL height</label>
+                            <label>LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:flexform.field.height</label>
                             <config>
                                 <type>input</type>
                                 <eval>int</eval>
