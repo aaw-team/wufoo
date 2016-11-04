@@ -1,9 +1,9 @@
 {
-	"name": "aaw-team/wufoo",
-	"type": "typo3-cms-extension",
-	"description": "Wufoo forms integration for TYPO3",
-	"homepage": "https://github.com/aaw-team/wufoo",
-	"version": "1.0.0-dev",
+    "name": "aaw-team/wufoo",
+    "type": "typo3-cms-extension",
+    "description": "Wufoo forms integration for TYPO3",
+    "homepage": "https://github.com/aaw-team/wufoo",
+    "version": "1.0.0-dev",
     "license": "GPL-2.0+",
     "authors": [
         {
@@ -22,13 +22,13 @@
         "php" : ">=5.4.0",
         "typo3/cms": ">=6.2.1,<=7.6.999"
     },
-	"replace": {
-	    "wufoo": "self.version",
-	    "typo3-ter/wufoo": "self.version"
-	},
-	"autoload": {
+    "replace": {
+        "wufoo": "self.version",
+        "typo3-ter/wufoo": "self.version"
+    },
+    "autoload": {
         "psr-4": {
             "AawTeam\\Wufoo\\": "Classes/"
         }
-	}
+    }
 }
