@@ -34,8 +34,8 @@ if (version_compare(TYPO3_version, '7', '>=')) {
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
     $iconRegistry->registerIcon(
             'content-wufoo',
-            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-            ['source' => 'EXT:wufoo/Resources/Public/Images/Plugin.svg']
+            \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+            ['source' => 'EXT:wufoo/Resources/Public/Images/Plugin-32x32.png']
             );
     $iconLine = 'iconIdentifier = content-wufoo';
 } else {
@@ -45,8 +45,7 @@ if (version_compare(TYPO3_version, '7', '>=')) {
 mod.wizards.newContentElement.wizardItems.plugins {
     elements {
         wufoo_form {
-            icon = gfx/c_wiz/mailform.gif
-//            ' . $iconLine . '
+            ' . $iconLine . '
             title = LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:plugin.title
             description = LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:plugin.description
             tt_content_defValues {
