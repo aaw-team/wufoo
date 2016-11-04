@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL General</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.formUrl>
+                        <TCEforms>
+                            <exclude>0</exclude>
+                            <label>LLL Form URL</label>
+                            <config>
+                                <type>input</type>
+                                <eval>required,trim</eval>
+                            </config>
+                        </TCEforms>
+                    </settings.formUrl>
+                </el>
+            </ROOT>
+        </sDEF>
+        <sADVANCED>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL Advanced</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.showHeader>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL Show header</label>
+                            <config>
+                                <type>check</type>
+                                <default>1</default>
+                            </config>
+                        </TCEforms>
+                    </settings.showHeader>
+                    <settings.autoresize>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL Auto resize</label>
+                            <config>
+                                <type>check</type>
+                                <default>1</default>
+                            </config>
+                        </TCEforms>
+                    </settings.autoresize>
+                    <settings.height>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL height</label>
+                            <config>
+                                <type>input</type>
+                                <eval>int</eval>
+                                <size>5</size>
+                                <default></default>
+                            </config>
+                        </TCEforms>
+                    </settings.height>
+                </el>
+            </ROOT>
+        </sADVANCED>
+    </sheets>
+</T3DataStructure>
