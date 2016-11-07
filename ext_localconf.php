@@ -60,3 +60,16 @@ mod.wizards.newContentElement.wizardItems.plugins {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('AawTeam.Wufoo', 'Form', [
     'Form' => 'index'
 ]);
+
+// Add default typoscript setup
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup('
+/**
+ * Default view configuration
+ */
+plugin.tx_wufoo {
+    view {
+        layoutRootPaths.0 = EXT:wufoo/Resources/Private/Layouts
+        partialRootPaths.0 = EXT:wufoo/Resources/Private/Partials
+        templateRootPaths.0 = EXT:wufoo/Resources/Private/Templates
+    }
+}');
