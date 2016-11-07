@@ -65,9 +65,10 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $formhash = $matches[1];
 
         // Set height
-        $height = MathUtility::canBeInterpretedAsInteger($this->settings['height']) && $this->settings['height'] > 0
-                  ? $this->settings['height']
-                  : 500;
+        $height = 500;
+        if (!$this->settings['autoresize'] && MathUtility::canBeInterpretedAsInteger($this->settings['height']) && $this->settings['height'] > 0) {
+            $height = $this->settings['height'];
+        }
 
         // create the javascript
         $js = "
