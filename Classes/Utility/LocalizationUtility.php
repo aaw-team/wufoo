@@ -54,7 +54,9 @@ class LocalizationUtility
             throw new \InvalidArgumentException('$arguments must be string, array or null');
         }
         $translated = ExtbaseLocalizationUtility::translate($key, 'wufoo', $arguments);
-        if ($translated === null) {
+        if ($translated === false) {
+            throw new \InvalidArgumentException('Too few arguments received, cannot translate');
+        } elseif ($translated === null) {
             $translated = $key;
         }
         return $translated;
