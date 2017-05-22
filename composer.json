@@ -20,7 +20,7 @@
     ],
     "require": {
         "php" : ">=5.4.0",
-        "typo3/cms": ">=6.2.1,<=7.6.999"
+        "typo3/cms-core": "^7.6|^8.7"
     },
     "replace": {
         "wufoo": "self.version",

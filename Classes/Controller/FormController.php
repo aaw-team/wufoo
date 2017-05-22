@@ -30,6 +30,7 @@ namespace AawTeam\Wufoo\Controller;
 
 use AawTeam\Wufoo\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
@@ -90,23 +91,12 @@ s.onload = s.onreadystatechange = function() {
 })(document, 'script');";
 
         $id = 'Wufoo-form-' . $this->configurationManager->getContentObject()->data['uid'] . '-' . $this->configurationManager->getContentObject()->data['sys_language_uid'];
-        $pr = $this->getPageRenderer()->addJsFooterInlineCode($id, $js);
+        GeneralUtility::makeInstance(PageRenderer::class)->addJsFooterInlineCode($id, $js);
 
         $this->view->assignMultiple([
             'username' => $username,
             'formhash' => $formhash,
             'height' => $height
         ]);
-    }
-
-    /**
-     * @return \TYPO3\CMS\Core\Page\PageRenderer
-     */
-    protected function getPageRenderer()
-    {
-        if (version_compare(TYPO3_version, '7', '<')) {
-            return $GLOBALS['TSFE']->getPageRenderer();
-        }
-        return $this->objectManager->get(PageRenderer::class);
     }
 }

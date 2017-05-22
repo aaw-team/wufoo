@@ -29,32 +29,16 @@
 
 defined ('TYPO3_MODE') or die ('Access denied.');
 
-// Register page TSConfig (new content element wizard)
-if (version_compare(TYPO3_version, '7', '>=')) {
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-    $iconRegistry->registerIcon(
-            'content-wufoo',
-            \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-            ['source' => 'EXT:wufoo/Resources/Public/Images/Plugin-32x32.png']
-            );
-    $iconLine = 'iconIdentifier = content-wufoo';
-} else {
-    $iconLine = 'icon = ../typo3conf/ext/wufoo/Resources/Public/Images/Plugin.png';
-}
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('
-mod.wizards.newContentElement.wizardItems.plugins {
-    elements {
-        wufoo_form {
-            ' . $iconLine . '
-            title = LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:plugin.title
-            description = LLL:EXT:wufoo/Resources/Private/Language/backend.xlf:plugin.description
-            tt_content_defValues {
-                CType = list
-                list_type = wufoo_form
-            }
-        }
-    }
-}');
+// Register plugin icon
+$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+$iconRegistry->registerIcon(
+    'content-wufoo',
+    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+    ['source' => 'EXT:wufoo/Resources/Public/Images/Plugin-32x32.png']
+);
+
+// Register page TSConfig
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:wufoo/Configuration/TSconfig/page.ts">');
 
 // Configure plugin
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin('AawTeam.Wufoo', 'Form', [
