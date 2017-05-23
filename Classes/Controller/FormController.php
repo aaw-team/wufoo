@@ -53,7 +53,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // Find username
         $matches = [];
-        if (!preg_match('/^([^\\.]+)\\.wufoo\\.com$/i', $formUrlParsed['host'], $matches)) {
+        if (!preg_match('/^([^\\.]+)\\.wufoo\\.(?:com|eu)$/i', $formUrlParsed['host'], $matches)) {
             return LocalizationUtility::translate('error.noUsername');
         }
         $username = $matches[1];
