@@ -52,6 +52,16 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             return LocalizationUtility::translate('error.invalidFormUrl');
         }
 
+        // Get the canonical form URL (experimental)
+        if ($this->settings['useCanonicalFormUrl']) {
+            try {
+                $canonicalFormUrl = FormUrlUtility::getCanonicalUrl($formUrl);
+                if ($formUrl !== $canonicalFormUrl && FormUrlUtility::verifyUrl($canonicalFormUrl)) {
+                    $formUrl = $canonicalFormUrl;
+                }
+            } catch (\AawTeam\Wufoo\Exception\CanonicalUrlException $e) {}
+        }
+
         // Extract data from $formUrl
         $formData = FormUrlUtility::extractData($formUrl);
         $username = $formData['username'];

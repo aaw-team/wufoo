@@ -57,3 +57,24 @@ plugin.tx_wufoo {
         templateRootPaths.0 = EXT:wufoo/Resources/Private/Templates
     }
 }');
+
+// Register canonicalUrl cache (StringFrontend is forced)
+if (!\is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['wufoo_canonicalUrl'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['wufoo_canonicalUrl'] = [
+        'options' => [
+            'defaultLifetime' => 604800 // 7 days
+        ],
+        'groups' => ['pages']
+    ];
+} else {
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['wufoo_canonicalUrl']['backend'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['wufoo_canonicalUrl']['backend'] = \TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend::class;
+    }
+    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['wufoo_canonicalUrl']['options']['defaultLifetime'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['wufoo_canonicalUrl']['options']['defaultLifetime'] = 604800;
+    }
+    if (!\is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['wufoo_canonicalUrl']['groups'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['wufoo_canonicalUrl']['groups'] = ['pages'];
+    }
+}
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['wufoo_canonicalUrl']['frontend'] = \TYPO3\CMS\Core\Cache\Frontend\StringFrontend::class;

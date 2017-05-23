@@ -29,6 +29,9 @@ namespace AawTeam\Wufoo\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Form URL Utility
  *
@@ -70,5 +73,66 @@ class FormUrlUtility
             'username' => $matches[1],
             'formhash' => $matches[2],
         ];
+    }
+
+    /**
+     * This method is EXPERIMENTAL!
+     *
+     * Returns the canonical URL for $formUrl (if possible). When no canonical
+     * URL has been found, $formUrl will be returned.
+     *
+     * @param string $formUrl
+     * @throws \InvalidArgumentException
+     * @throws \AawTeam\Wufoo\Exception\UrlRequestException
+     * @throws \AawTeam\Wufoo\Exception\DomLoadException
+     * @return string
+     */
+    public static function getCanonicalUrl($formUrl)
+    {
+        if (!self::verifyUrl($formUrl)) {
+            throw new \InvalidArgumentException('$formUrl is not a valid wufoo form URL', 1495546568);
+        }
+
+        $cacheId = sha1($formUrl);
+        /** @var \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface $cache */
+        $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('wufoo_canonicalUrl');
+        if (($canonicalUrl = $cache->get($cacheId)) === false) {
+            // Send the request
+            $requestHeaders = [
+                'Accept: text/html',
+                'Pragma: no-cache',
+                'Cache-Control: no-cache',
+                'Connection: close',
+                'User-Agent: TYPO3 Extension wufoo (https://github.com/aaw-team/wufoo)',
+                'Referer: ' . GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL')
+            ];
+            $report = [];
+            $responseBody = GeneralUtility::getUrl($formUrl, 0, $requestHeaders, $report);
+            if (!$responseBody) {
+                throw new \AawTeam\Wufoo\Exception\UrlRequestException('Cannot get contents of URL ' . \htmlspecialchars($formUrl), 1495549258, $report);
+            }
+
+            // Load the html content of the response
+            $DOMDocument = new \DOMDocument();
+            $previousLibxmlErrors = \libxml_use_internal_errors(true);
+            if (!$DOMDocument->loadHTML($responseBody, LIBXML_NONET)) {
+                throw new \AawTeam\Wufoo\Exception\DomLoadException('Cannot load HTML', 1495549433, \libxml_get_errors());
+            }
+            \libxml_use_internal_errors($previousLibxmlErrors);
+
+            // Try to find the canonical URL
+            $xpath = new \DOMXPath($DOMDocument);
+            $canonicalUrl = $xpath->evaluate('/html/head/link[@rel="canonical"][1]/@href')->item(0)->value;
+
+            // If no canonical URL is found, use $formUrl
+            if (!\is_string($canonicalUrl)) {
+                $canonicalUrl = $formUrl;
+            }
+
+            // Store into cache
+            $cache->set($cacheId, $canonicalUrl);
+        }
+
+        return $canonicalUrl;
     }
 }
