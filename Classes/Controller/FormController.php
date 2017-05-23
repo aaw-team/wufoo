@@ -28,6 +28,7 @@ namespace AawTeam\Wufoo\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  */
 
+use AawTeam\Wufoo\Utility\FormUrlUtility;
 use AawTeam\Wufoo\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -46,24 +47,15 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function indexAction()
     {
-        $formUrlParsed = parse_url($this->settings['formUrl']);
-        if (!$formUrlParsed) {
+        $formUrl = \trim($this->settings['formUrl']);
+        if (!FormUrlUtility::verifyUrl($formUrl)) {
             return LocalizationUtility::translate('error.invalidFormUrl');
         }
 
-        // Find username
-        $matches = [];
-        if (!preg_match('/^([^\\.]+)\\.wufoo\\.(?:com|eu)$/i', $formUrlParsed['host'], $matches)) {
-            return LocalizationUtility::translate('error.noUsername');
-        }
-        $username = $matches[1];
-
-        // Find formhash
-        $matches = [];
-        if (!preg_match('~^/forms/([^/]+)/?$~i', $formUrlParsed['path'], $matches)) {
-            return LocalizationUtility::translate('error.noFormhash');
-        }
-        $formhash = $matches[1];
+        // Extract data from $formUrl
+        $formData = FormUrlUtility::extractData($formUrl);
+        $username = $formData['username'];
+        $formhash = $formData['formhash'];
 
         // Set height
         $height = 500;
@@ -71,9 +63,14 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $height = $this->settings['height'];
         }
 
-        // create the javascript
+        // Create the javascript
+        $jsId = 'tx_wufoo_form_' . \sha1(
+            $this->configurationManager->getContentObject()->data['uid'] .
+            $this->configurationManager->getContentObject()->data['sys_language_uid'] .
+            $formUrl
+        );
         $js = "
-var " . $formhash . ";(function(d, t) {
+var " . $jsId . ";(function(d, t) {
 var s = d.createElement(t), options = {
     'userName':'" . $username . "',
     'formHash':'" . $formhash . "',
@@ -86,12 +83,12 @@ var s = d.createElement(t), options = {
 s.src = ('https:' == d.location.protocol ? 'https://' : 'http://') + 'www.wufoo.com/scripts/embed/form.js';
 s.onload = s.onreadystatechange = function() {
     var rs = this.readyState; if (rs) if (rs != 'complete') if (rs != 'loaded') return;
-    try { " . $formhash . " = new WufooForm();" . $formhash . ".initialize(options);" . $formhash . ".display(); } catch (e) {}};
+    try { " . $jsId . " = new WufooForm();" . $jsId . ".initialize(options);" . $jsId . ".display(); } catch (e) {}};
     var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr);
 })(document, 'script');";
 
-        $id = 'Wufoo-form-' . $this->configurationManager->getContentObject()->data['uid'] . '-' . $this->configurationManager->getContentObject()->data['sys_language_uid'];
-        GeneralUtility::makeInstance(PageRenderer::class)->addJsFooterInlineCode($id, $js);
+        // Register javascript
+        GeneralUtility::makeInstance(PageRenderer::class)->addJsFooterInlineCode($jsId, $js);
 
         $this->view->assignMultiple([
             'username' => $username,

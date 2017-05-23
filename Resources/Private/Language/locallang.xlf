@@ -6,12 +6,6 @@
             <trans-unit id="error.invalidFormUrl">
                 <source>Error: invalid Form URL</source>
             </trans-unit>
-            <trans-unit id="error.noUsername">
-                <source>Error: cannot extract username</source>
-            </trans-unit>
-            <trans-unit id="error.noFormhash">
-                <source>Error: cannot extract formhash</source>
-            </trans-unit>
         </body>
     </file>
 </xliff>
