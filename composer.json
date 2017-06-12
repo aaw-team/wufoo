@@ -3,7 +3,7 @@
     "type": "typo3-cms-extension",
     "description": "Wufoo forms integration for TYPO3",
     "homepage": "https://github.com/aaw-team/wufoo",
-    "version": "1.0.0-dev",
+    "version": "0.1.0-dev",
     "license": "GPL-2.0+",
     "authors": [
         {
