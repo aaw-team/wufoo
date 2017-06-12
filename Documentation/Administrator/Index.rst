@@ -13,7 +13,7 @@ Installation
 
 Simply install the extension in TYPO3 Extension Manager or via composer:
 
-``composer require typo3-ter/wufoo``
+``composer require aaw-team/wufoo``
 
 .. _section-templating:
 

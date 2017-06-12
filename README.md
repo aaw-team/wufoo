@@ -6,7 +6,7 @@ This extension lets you add your [Wufoo](https://www.wufoo.com/) forms to your T
 
 Install in TYPO3 Extension Manager or via composer:
 
-``composer require typo3-ter/wufoo``
+``composer require aaw-team/wufoo``
 
 ## Display a shared form on your TYPO3 website
 
