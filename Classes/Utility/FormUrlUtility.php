@@ -40,18 +40,40 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FormUrlUtility
 {
+    const FORMURL_REGEX = '~^https?:\\/\\/([^\\.]+)\\.wufoo\\.(?:com|eu)\\/forms\\/([^\\/]+)\\/?$~i';
+
     /**
-     * Verifies whether $formUrl is a valid wufoo form URL or not.
+     * @var array
+     */
+    protected static $urlVerificationCache = [];
+
+    /**
+     * Verifies whether $formUrl is a valid wufoo form URL or not. Additionally,
+     * analysis result information is stored to $result.
      *
      * @param string $formUrl
+     * @param array $result
      * @return boolean
      */
-    public static function verifyUrl($formUrl)
+    public static function verifyUrl($formUrl, &$result = [])
     {
         if (!\is_string($formUrl)) {
             throw new \InvalidArgumentException('$formUrl must be string', 1495545943);
         }
-        return (bool) \preg_match('~^https?:\\/\\/[^\\.]+\\.wufoo\\.(?:com|eu)\\/forms\\/[^\\/]+\\/?$~i', $formUrl);
+        $urlHash = \sha1($formUrl);
+        if (!array_key_exists($urlHash, self::$urlVerificationCache)) {
+            self::$urlVerificationCache[$urlHash] = [
+                'result' => (bool) \preg_match(self::FORMURL_REGEX, $formUrl, $matches),
+                'username' => '',
+                'formhash' => ''
+            ];
+            if (self::$urlVerificationCache[$urlHash]['result']) {
+                self::$urlVerificationCache[$urlHash]['username'] = $matches[1];
+                self::$urlVerificationCache[$urlHash]['formhash'] = $matches[2];
+            }
+        }
+        $result = self::$urlVerificationCache[$urlHash];
+        return self::$urlVerificationCache[$urlHash]['result'];
     }
 
     /**
@@ -63,16 +85,10 @@ class FormUrlUtility
      */
     public static function extractData($formUrl)
     {
-        if (!self::verifyUrl($formUrl)) {
+        if (!self::verifyUrl($formUrl, $result)) {
             throw new \InvalidArgumentException('$formUrl is not a valid wufoo form URL', 1495546005);
         }
-
-        \preg_match('~^https?:\\/\\/([^\\.]+)\\.wufoo\\.(?:com|eu)\\/forms\\/([^\\/]+)\\/?$~i', $formUrl, $matches);
-
-        return [
-            'username' => $matches[1],
-            'formhash' => $matches[2],
-        ];
+        return $result;
     }
 
     /**
