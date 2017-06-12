@@ -11,8 +11,9 @@ Administrator Manual
 Installation
 ------------
 
-Simply install the extension in Extension Manager.
+Simply install the extension in TYPO3 Extension Manager or via composer:
 
+``composer require typo3-ter/wufoo``
 
 .. _section-templating:
 
@@ -34,7 +35,5 @@ templates and partials:
 
 .. important::
 
-    It is recommended to work with the **layout only**, because the template
-    itself may change over time. There is nothing special to change in the
-    template anyway, there is only a ``<div>`` and a ``<noscript>`` tag.
-
+    At the moment, the extension provides only one single template. There are no
+    partials or layouts, because the work for the template is marginal.

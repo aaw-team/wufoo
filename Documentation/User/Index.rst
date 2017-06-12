@@ -13,11 +13,11 @@ Import and display a form
 
 To import and display a form, follw these steps:
 
-#. In your account on https://wufoo.com/ find the form you want to add to your
-   TYPO3 website and copy its "share-link" using the **Permanent Link** (see
-   `Wufoo Help Center
-   <http://help.wufoo.com/articles/en_US/kb/Form-Links?bc=Sharing_Forms>`__ for
-   more information on how to do this, it's very easy)
+#. In your account on https://www.wufoo.com/ find the form you want to add to
+   your TYPO3 website and copy its "share-link" using the **Permanent Link**
+   (see `Wufoo Help Center
+   <https://help.wufoo.com/articles/en_US/kb/Form-Links>`__ for more information
+   on how to do this, it's very easy)
 #. Then, in TYPO3, using the page module, go to the desired page and add a
    content element of type "Wufoo Form" (which can be found in the tab
    "Plugins")
@@ -29,7 +29,7 @@ To import and display a form, follw these steps:
 
    Be sure to always use the **Permanent Link** when generating the "share link"
    in the form share dialog on wufoo.com. This ensures that your form will not
-   stop from being displayed, even when you change the form name.
+   stop from being displayed, even when you change its name.
 
 
 .. figure:: ../Images/UserManual/PluginOptionsGeneral.png

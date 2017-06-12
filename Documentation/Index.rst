@@ -25,7 +25,7 @@ Wufoo
         TYPO3, Wufoo, form
 
     :Copyright:
-        2016 by Agentur am Wasser | Maeder & Partner AG (https://web.agenturamwasser.ch)
+        2016-2017 by Agentur am Wasser | Maeder & Partner AG (https://web.agenturamwasser.ch)
 
     :Author:
         Christian Futterlieb
