@@ -57,8 +57,7 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if (isset($this->settings['useStdWrap']) && \is_string($this->settings['useStdWrap'])) {
             $stdWrapProperties = GeneralUtility::trimExplode(',', $this->settings['useStdWrap'], true);
             if (!empty($stdWrapProperties)) {
-                /** @var \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoscriptService*/
-                $typoscriptService = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
+                $typoscriptService = $this->getTypoScriptService();
                 $typoscriptSettings = $typoscriptService->convertPlainArrayToTypoScriptArray($this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS));
 
                 foreach ($stdWrapProperties as $property) {
@@ -136,5 +135,24 @@ s.onload = s.onreadystatechange = function() {
             'formhash' => $formhash,
             'height' => $height
         ]);
+    }
+
+    /**
+     * Returns an instance of TypoScriptService. This class was moved from
+     * extbase to core in 8.7
+     *
+     * This method can be removed when support for TYPO3 < 8.7 is dropped.
+     *
+     * @see https://docs.typo3.org/typo3cms/extensions/core/8.7/Changelog/8.7/Important-78650-TypoScriptServiceClassMovedFromExtbaseToCore.html
+     * @return \TYPO3\CMS\Extbase\Service\TypoScriptService|\TYPO3\CMS\Core\TypoScript\TypoScriptService
+     */
+    protected function getTypoScriptService()
+    {
+        if (\version_compare(TYPO3_version, '8.7', '<')) {
+            $className = \TYPO3\CMS\Extbase\Service\TypoScriptService::class;
+        } else {
+            $className = \TYPO3\CMS\Core\TypoScript\TypoScriptService::class;
+        }
+        return GeneralUtility::makeInstance($className);
     }
 }
