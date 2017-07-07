@@ -33,6 +33,7 @@ use AawTeam\Wufoo\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /**
  * Form Controller
@@ -42,6 +43,33 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+    /**
+     * Extend parent method: apply stdWrap to (therefor configured) options in
+     * settings.
+     *
+     * {@inheritDoc}
+     * @see \TYPO3\CMS\Extbase\Mvc\Controller\AbstractController::injectConfigurationManager()
+     */
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
+    {
+        parent::injectConfigurationManager($configurationManager);
+
+        if ($this->settings['useStdWrap']) {
+            $stdWrapProperties = GeneralUtility::trimExplode(',', (string)$this->settings['useStdWrap'], true);
+            if (!empty($stdWrapProperties)) {
+                /** @var \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoscriptService*/
+                $typoscriptService = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
+                $typoscriptSettings = $typoscriptService->convertPlainArrayToTypoScriptArray($this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS));
+
+                foreach ($stdWrapProperties as $property) {
+                    if (is_array($typoscriptSettings[$property . '.'])) {
+                        $this->settings[$property] = $this->configurationManager->getContentObject()->stdWrapValue($property, $typoscriptSettings, $this->settings[$property]);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * @return void|string
      */
