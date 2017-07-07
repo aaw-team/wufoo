@@ -54,8 +54,8 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         parent::injectConfigurationManager($configurationManager);
 
-        if ($this->settings['useStdWrap']) {
-            $stdWrapProperties = GeneralUtility::trimExplode(',', (string)$this->settings['useStdWrap'], true);
+        if (isset($this->settings['useStdWrap']) && \is_string($this->settings['useStdWrap'])) {
+            $stdWrapProperties = GeneralUtility::trimExplode(',', $this->settings['useStdWrap'], true);
             if (!empty($stdWrapProperties)) {
                 /** @var \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoscriptService*/
                 $typoscriptService = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\TypoScriptService::class);
@@ -75,6 +75,9 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function indexAction()
     {
+        if (!\is_string($this->settings['formUrl'])) {
+            return LocalizationUtility::translate('error.invalidFormUrl');
+        }
         $formUrl = \trim($this->settings['formUrl']);
         if (!FormUrlUtility::verifyUrl($formUrl)) {
             return LocalizationUtility::translate('error.invalidFormUrl');
@@ -97,8 +100,8 @@ class FormController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // Set height
         $height = 500;
-        if (!$this->settings['autoresize'] && MathUtility::canBeInterpretedAsInteger($this->settings['height']) && $this->settings['height'] > 0) {
-            $height = $this->settings['height'];
+        if (MathUtility::canBeInterpretedAsInteger($this->settings['height']) && $this->settings['height'] > 0) {
+            $height = (int)$this->settings['height'];
         }
 
         // Create the javascript
@@ -112,11 +115,11 @@ var " . $jsId . ";(function(d, t) {
 var s = d.createElement(t), options = {
     'userName':'" . $username . "',
     'formHash':'" . $formhash . "',
-    'autoResize':" . ($this->settings['autoresize'] ? 'true' : 'false') . ",
+    'autoResize':" . ($this->settings['autoresize'] == 1 ? 'true' : 'false') . ",
     'height':'" . $height . "',
     'async':true,
     'host':'wufoo.com',
-    'header':'" . ($this->settings['showHeader'] ? 'show' : 'hide') . "',
+    'header':'" . ($this->settings['showHeader'] == 1 ? 'show' : 'hide') . "',
     'ssl':true};
 s.src = ('https:' == d.location.protocol ? 'https://' : 'http://') + 'www.wufoo.com/scripts/embed/form.js';
 s.onload = s.onreadystatechange = function() {

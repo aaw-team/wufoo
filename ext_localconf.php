@@ -48,9 +48,16 @@ $iconRegistry->registerIcon(
 // Add default typoscript setup
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup('
 /**
- * Default view configuration
+ * Default plugin configuration
  */
 plugin.tx_wufoo {
+    settings {
+        useStdWrap =
+        formUrl =
+        showHeader = 1
+        autoresize = 1
+        height = 500
+    }
     view {
         layoutRootPaths.0 = EXT:wufoo/Resources/Private/Layouts
         partialRootPaths.0 = EXT:wufoo/Resources/Private/Partials
